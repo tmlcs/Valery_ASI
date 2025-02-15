@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package agent_ai;
+
+option go_package = "agent_ai/protos";
+option java_multiple_files = true;
+option java_package = "com.agent_ai.protos";
+option java_outer_classname = "QueryProto";
+
+message QueryRequest {
+    string message = 1;
+    string user_id = 2;  // Optional
+    int64 timestamp = 3;
+}
+
+message QueryResponse {
+    message SentimentAnalysis {
+        string label = 1;
+        float score = 2;
+        int32 rating = 3;
+    }
+
+    message EmotionAnalysis {
+        string label = 1;
+        float score = 2;
+    }
+
+    message TopicAnalysis {
+        string label = 1;
+        float score = 2;
+        repeated string all_topics = 3;
+        repeated float all_scores = 4;
+    }
+
+    string status = 1;
+    SentimentAnalysis sentiment = 2;
+    EmotionAnalysis emotion = 3;
+    TopicAnalysis topic = 4;
+    int64 timestamp = 5;
+    string error = 6;
+}

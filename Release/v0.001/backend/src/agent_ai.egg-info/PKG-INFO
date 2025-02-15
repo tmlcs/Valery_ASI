@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: agent-ai
+Version: 0.1
+Summary: AI agent for text analysis
+Author: Your Name
+Requires-Python: >=3.8

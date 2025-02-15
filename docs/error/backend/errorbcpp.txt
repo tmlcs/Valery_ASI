@@ -1,0 +1,61 @@
+Analizaré los errores y problemas potenciales en cada archivo:
+
+### [main.cpp](vscode-remote://dev-container/volume/agent-ai/backend/src/main.cpp)
+1. Falta manejo de errores para el caso en que el servidor no pueda iniciarse
+2. No hay manejo de señales del sistema (SIGINT, SIGTERM)
+3. Falta validación del puerto antes de iniciar el servidor
+4. No hay configuración de timeouts para las conexiones HTTP
+
+### [zmqthreadpool.h](vscode-remote://dev-container/volume/agent-ai/backend/include/zmqthreadpool.h)
+1. Posible condición de carrera en el destructor
+2. No hay límite de tamaño para la cola de tareas
+3. Falta manejo de excepciones en el worker loop
+4. No hay mecanismo para cancelar tareas en proceso durante el shutdown
+
+### [zmqclient.h](vscode-remote://dev-container/volume/agent-ai/backend/include/zmqclient.h)
+1. El uso de static para instance puede causar problemas en destrucción
+2. No hay timeout en la espera del future en send_message
+3. Posible memory leak si la inicialización del socket falla
+4. Falta sincronización en el acceso al contexto ZMQ
+
+### [validator.h](vscode-remote://dev-container/volume/agent-ai/backend/include/validator.h)
+1. validateNestedFields está declarada pero no implementada
+2. No hay validación de profundidad máxima para JSON anidado
+3. Falta validación de tipos de datos específicos
+4. No hay manejo de caracteres especiales o encoding
+
+### [ratelimiter.h](vscode-remote://dev-container/volume/agent-ai/backend/include/ratelimiter.h)
+1. Posible memory leak si las IPs nunca se limpian
+2. No hay límite en el número de IPs distintas almacenadas
+3. La cola puede crecer indefinidamente
+4. Falta método para limpiar entradas antiguas periódicamente
+
+### [config.h](vscode-remote://dev-container/volume/agent-ai/backend/include/config.h)
+1. Las constantes no son configurables en tiempo de ejecución
+2. Falta validación de valores de entorno
+3. No hay manejo de tipos para las variables de entorno
+4. Falta documentación de las constantes
+
+### [circuitbreaker.h](vscode-remote://dev-container/volume/agent-ai/backend/include/circuitbreaker.h)
+1. Posible race condition en la verificación y actualización del estado
+2. No hay mecanismo de half-open state
+3. Falta logging de cambios de estado
+4. No hay método para reset manual
+
+### [application.h](vscode-remote://dev-container/volume/agent-ai/backend/include/application.h)
+1. No hay implementación de setupSignalHandlers
+2. Falta manejo de recursos en destructor
+3. No hay timeout en el heartbeat
+4. Falta método para recargar configuración
+
+### Problemas Generales:
+1. Falta manejo consistente de logging
+2. No hay sistema de métricas
+3. Falta documentación detallada
+4. No hay manejo de configuración centralizado
+5. Faltan pruebas de integración
+6. No hay manejo de versiones en la API
+7. Falta gestión de memoria más robusta
+8. No hay sistema de monitoreo de salud
+
+¿Deseas que proponga soluciones específicas para alguno de estos problemas?

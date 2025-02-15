@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Asistente IA Multimedia: Analiza textos, edita medios y gestiona estudios con inteligencia artificial">
+    <meta name="keywords" content="AI, asistente, multimedia, análisis texto, editor">
+    <meta name="author" content="AI Assistant">
+    <meta name="theme-color" content="#007bff">
+    <meta name="color-scheme" content="light dark">
+    
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="Asistente IA Multimedia">
+    <meta property="og:description" content="Analiza textos, edita medios y gestiona estudios con inteligencia artificial">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/assets/og-image.png">
+    <meta property="og:url" content="https://yourdomain.com">
+    
+    <!-- Twitter Card tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Asistente IA Multimedia">
+    <meta name="twitter:description" content="Analiza textos, edita medios y gestiona estudios con IA">
+    
+    <title>Asistente IA Multimedia</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="manifest" href="/assets/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#007bff">
+    
+    <!-- Preload critical assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="/assets/fonts/material-icons/MaterialIcons-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/roboto/Roboto-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/roboto/Roboto-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="/js/Config/Config.js" as="script" crossorigin="anonymous">
+
+    <!-- Material Icons -->    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <!-- Font fallbacks -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Critical CSS -->
+    <style>
+        body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        .loading { display: none; }
+        .error-message { display: none; }
+    </style>
+    
+    <!-- Corregir script tags -->
+    <script src="/js/logWorker.js" type="module" defer></script>
+    <script src="/js/Cache/Cache.js" type="module" defer></script>
+    <script src="/js/dropdown.js" type="module" defer></script>
+    <script src="/js/app.js" type="module" defer></script>
+
+    <!-- Preload critical DOM elements -->
+    <script>
+        // Pre-cache critical selectors
+        window.__DOM_CACHE = {
+            criticalSelectors: [
+                '#queryForm',
+                '#queryInput',
+                '#responseContainer',
+                '#responseText',
+                '#loadingIndicator',
+                '#errorMessage'
+            ]
+        };
+    </script>
+    
+    <!-- Add favicon -->
+    <noscript>
+        <div class="error-message" role="alert">
+            Esta aplicación requiere JavaScript para funcionar correctamente.
+            Por favor, habilite JavaScript en su navegador.
+        </div>
+    </noscript>
+    <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+        <div class="nav-header">
+            <h2>Asistente IA</h2>
+            <button class="nav-toggle" id="navToggle" aria-label="Alternar menú">
+                <span class="material-icons" aria-hidden="true">chevron_left</span>
+            </button>
+        </div>
+        <ul class="nav-menu" role="tablist" aria-label="Secciones principales">
+            <!-- Template for repeated dropdown items -->
+            <template id="nav-dropdown-template">
+                <div class="nav-dropdown-content" role="menu">
+                    <div class="nav-dropdown-item" role="menuitem" tabindex="-1" data-action="new-analysis">
+                        <span class="material-icons" aria-hidden="true">add</span>
+                        Nuevo Análisis
+                    </div>
+                    <div class="nav-dropdown-item" role="menuitem" tabindex="-1" data-action="history">
+                        <span class="material-icons" aria-hidden="true">history</span>
+                        Historial
+                    </div>
+                    <div class="nav-dropdown-divider" role="separator"></div>
+                    <div class="nav-dropdown-item" role="menuitem" tabindex="-1" data-action="settings">
+                        <span class="material-icons" aria-hidden="true">settings</span>
+                        Configuración
+                    </div>
+                </div>
+            </template>
+
+            <!-- Nav items -->
+            <li class="nav-item" role="tab" aria-selected="true" aria-controls="userTab" id="userTabTrigger">
+                <span class="material-icons nav-icon" aria-hidden="true">user</span>
+                <span class="nav-label">Usuario</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="avatar">
+                <span class="material-icons nav-icon">user</span>
+                <span class="nav-label">Avatar</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="chat">
+                <span class="material-icons nav-icon">chat</span>
+                <span class="nav-label">Chat</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="explore">
+                <span class="material-icons nav-icon">air</span>
+                <span class="nav-label">Explore</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="audio-recognition">
+                <span class="material-icons nav-icon">audio</span>
+                <span class="nav-label">Reconocimiento de Audio</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="vision-recognition">
+                <span class="material-icons nav-icon">eye</span>
+                <span class="nav-label">Reconocimiento de Visión</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <!-- Special dropdown for image editor -->
+            <li class="nav-item" data-tab="image">
+                <span class="material-icons nav-icon">image</span>
+                <span class="nav-label">Editor de Imagen</span>
+                <div class="nav-dropdown-content">
+                    <div class="nav-dropdown-item" data-action="new-image">
+                        <span class="material-icons">add_photo_alternate</span>
+                        Nueva Imagen
+                    </div>
+                    <div class="nav-dropdown-item" data-action="gallery">
+                        <span class="material-icons">photo_library</span>
+                        Galería
+                    </div>
+                    <div class="nav-dropdown-divider"></div>
+                    <div class="nav-dropdown-item" data-action="batch">
+                        <span class="material-icons">batch_prediction</span>
+                        Proceso por Lotes
+                    </div>
+                </div>
+            </li>
+            <!-- Items without dropdowns -->
+            <li class="nav-item" data-tab="video">
+                <span class="material-icons nav-icon">videocam</span>
+                <span class="nav-label">Editor de Video</span>
+            </li>
+            <li class="nav-item" data-tab="audio">
+                <span class="material-icons nav-icon">audiotrack</span>
+                <span class="nav-label">Editor de Audio</span>
+            </li>
+            <li class="nav-item" data-tab="study">
+                <span class="material-icons nav-icon">school</span>
+                <span class="nav-label">Área de Estudio</span>
+            </li>
+            <!-- Management items with standard dropdown -->
+            <li class="nav-item active" data-tab="curriculum">
+                <span class="material-icons nav-icon">article</span>
+                <span class="nav-label">Curriculum</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="job">
+                <span class="material-icons nav-icon">work</span>
+                <span class="nav-label">Gestión Laboral</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="financial">
+                <span class="material-icons nav-icon">bar_chart</span>
+                <span class="nav-label">Gestión Financiera</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="social">
+                <span class="material-icons nav-icon">people</span>
+                <span class="nav-label">Gestión Social</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="streaming">
+                <span class="material-icons nav-icon">stream</span>
+                <span class="nav-label">Gestión de Streaming</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item active" data-tab="marketing">
+                <span class="material-icons nav-icon">campaign</span>
+                <span class="nav-label">Gestión de Marketing</span>
+                <div class="nav-dropdown-content"></div>
+            </li>
+            <li class="nav-item" role="tab" aria-controls="calendarTab" id="calendarTabTrigger">
+                <span class="material-icons nav-icon" aria-hidden="true">calendar_today</span>
+                <span class="nav-label">Calendario</span>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content" role="main">
+        <div id="appServerStatus" class="server-status" role="status" aria-live="polite"></div>
+        <div id="appGlobalError" class="error-message" style="display: none;" role="alert"></div>
+        <h1>Asistente IA Multimedia</h1>
+
+        <!-- Text Analysis Tab -->
+        <div class="tab-content active" id="textAnalysisTab" role="tabpanel" aria-labelledby="textTabTrigger" tabindex="0">
+            <form id="queryForm" aria-label="Formulario de análisis de texto">
+                <div class="form-group">
+                    <label for="queryInput" class="sr-only">Texto para analizar</label>
+                    <textarea 
+                        id="queryInput" 
+                        name="queryInput"
+                        placeholder="Escribe o pega tu texto aquí para analizarlo..."
+                        required
+                        aria-required="true"
+                        aria-label="Texto para analizar"
+                    ></textarea>
+                </div>
+                <div class="button-group" role="group" aria-label="Controles de formulario">
+                    <button type="submit" id="submitButton" aria-label="Analizar texto">Analizar Texto</button>
+                    <button type="button" id="exampleButton" class="secondary-button" aria-label="Cargar ejemplo">Cargar Ejemplo</button>
+                    <button type="button" id="clearButton" class="secondary-button" aria-label="Limpiar formulario">Limpiar</button>
+                </div>
+            </form>
+            
+            <div id="loadingIndicator" class="loading" role="status" aria-live="polite" hidden>
+                <span class="sr-only">Procesando solicitud...</span>
+            </div>
+            <div id="errorMessage" class="error-message" style="display: none;" role="alert"></div>
+            
+            <div id="responseContainer" style="display: none;" aria-live="polite">
+                <h2>Resultados del Análisis</h2>
+                <div id="responseText" role="region" aria-label="Resultados del análisis"></div>
+            </div>
+        </div>
+
+        <!-- Image Editor Tab -->
+        <div class="tab-content" id="imageTab" role="tabpanel" aria-labelledby="imageTab">
+            <div class="media-editor">
+                <div class="editor-panel">
+                    <div class="toolbar">
+                        <button class="tool-button">Recortar</button>
+                        <button class="tool-button">Filtros</button>
+                        <button class="tool-button">Ajustes</button>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                                <span class="material-icons">tune</span>
+                                <span class="toggle-text">Opciones</span>
+                                <span class="material-icons">arrow_drop_down</span>
+                            </button>
+                            <div class="dropdown-menu" role="menu">
+                                <div class="dropdown-item" data-value="option1">
+                                    <span class="material-icons">settings</span>
+                                    Configuración
+                                </div>
+                                <div class="dropdown-item" data-value="option2">
+                                    <span class="material-icons">brush</span>
+                                    Personalizar
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-item" data-value="option3">
+                                    <span class="material-icons">help</span>
+                                    Ayuda
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-area" id="imagePreview">
+                        <p>Arrastra una imagen o haz clic para seleccionar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Editor Tab -->
+        <div class="tab-content" id="videoTab" role="tabpanel" aria-labelledby="videoTab">
+            <div class="media-editor">
+                <div class="editor-panel">
+                    <div class="toolbar">
+                        <button class="tool-button">Cortar</button>
+                        <button class="tool-button">Transiciones</button>
+                        <button class="tool-button">Efectos</button>
+                    </div>
+                    <div class="preview-area" id="videoPreview">
+                        <p>Arrastra un video o haz clic para seleccionar</p>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-track"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audio Editor Tab -->
+        <div class="tab-content" id="audioTab" role="tabpanel" aria-labelledby="audioTab">
+            <div class="media-editor">
+                <div class="editor-panel">
+                    <div class="audio-controls">
+                        <button class="tool-button">Reproducir</button>
+                        <button class="tool-button">Grabar</button>
+                        <button class="tool-button">Efectos</button>
+                    </div>
+                    <div class="waveform" id="audioWaveform"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Area Tab -->
+        <div class="tab-content" id="studyTab" role="tabpanel" aria-labelledby="studyTab">
+            <div class="study-dashboard">
+                <div class="study-card">
+                    <h3>Progreso del Curso</h3>
+                    <div class="progress-circle" style="--progress: 75%"></div>
+                    <p>75% Completado</p>
+                </div>
+                <div class="study-card">
+                    <h3>Próximas Tareas</h3>
+                    <ul id="tasksList"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Tab -->
+        <div class="tab-content" id="calendarTab" role="tabpanel" aria-labelledby="calendarTab">
+            <div class="calendar-widget">
+                <div class="toolbar">
+                    <button class="tool-button" id="prevMonth">&lt;</button>
+                    <h3 id="currentMonth">Septiembre 2023</h3>
+                    <button class="tool-button" id="nextMonth">&gt;</button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading States Alert -->
+    <div id="loadingStateAlert" class="sr-only" role="status" aria-live="polite"></div>
+
+    <!-- Agregar elementos faltantes -->
+    <div id="serverStatus" class="server-status" role="status"></div>
+    <div id="appGlobalError" class="error-message" role="alert"></div>
+
+    <!-- Optimize DOM structure for better performance -->
+    <div id="app-root">
+        <!-- Container for virtual DOM updates -->
+        <div id="dynamic-content"></div>
+    </div>
+    
+    <!-- Template for results to avoid innerHTML -->
+    <template id="result-template">
+        <div class="result-card">
+            <h3 class="result-title"></h3>
+            <p class="result-value"></p>
+            <div class="confidence-bar">
+                <div class="confidence-bar-fill"></div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        // Initialize dropdowns from template
+        document.addEventListener('DOMContentLoaded', () => {
+            const template = document.getElementById('nav-dropdown-template');
+            const dropdowns = document.querySelectorAll('.nav-item .nav-dropdown-content:empty');
+            
+            dropdowns.forEach(dropdown => {
+                const clone = template.content.cloneNode(true);
+                dropdown.appendChild(clone);
+            });
+        });
+    </script>
+</body>
+</html>

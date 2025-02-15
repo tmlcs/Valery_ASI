@@ -1,0 +1,1 @@
+/usr/bin/c++ -O2 -Wall CMakeFiles/unit_tests.dir/src/tests/cpp/test_main.cpp.o -o unit_tests  lib/libgtest.a lib/libgtest_main.a lib/libgmock.a lib/libgmock_main.a -lzmq lib/libgmock.a lib/libgtest.a 
