@@ -1,12 +1,3 @@
-npm test -- tests/mutex > testerror.txt 2>&1
-npm test -- tests/RateLimiter -- tests/Mutex -- tests/Validation -- tests/CircuitBreaker > testerror.txt 2>&1
-pytest --cov=agent_ai tests/ --cov-report=html
-pytest tests/test_zmq_manager.py -v
-
-Analiza el codigo de todos los archivos con gran detalle
-Identifica errores en el codigo de todos los archivos
-
-
 <h2 align="left">Hi 👋! My name is TMLCS and I'm a Full-Stacks DEV</h2>
 
 ###
@@ -126,5 +117,13 @@ Identifica errores en el codigo de todos los archivos
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="30" alt="vscode logo"  />
 </div>
+
+npm test -- tests/mutex > testerror.txt 2>&1
+npm test -- tests/RateLimiter -- tests/Mutex -- tests/Validation -- tests/CircuitBreaker > testerror.txt 2>&1
+pytest --cov=agent_ai tests/ --cov-report=html
+pytest tests/test_zmq_manager.py -v
+
+Analiza el codigo de todos los archivos con gran detalle
+Identifica errores en el codigo de todos los archivos
 
 ###
