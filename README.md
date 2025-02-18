@@ -1,4 +1,4 @@
-<h2 align="left">Hi 👋! My name is TMLCS and I'm a Full-Stacks DEV</h2>
+<h2 align="left">Welcome to Valery Project 👋!</h2>
 
 ###
 
