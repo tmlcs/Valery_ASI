@@ -1,4 +1,4 @@
-<h2 align="left">Welcome to Valery Project 👋!</h2>
+<h2 align="left">Welcome to Valery Project 👋! Valery ASI version: alpha-0.001</h2>
 
 ###
 
