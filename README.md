@@ -132,5 +132,59 @@ pytest tests/test_zmq_manager.py -v
 
 Analiza el codigo de todos los archivos con gran detalle
 Identifica errores en el codigo de todos los archivos
+Depura codigo duplicado o redundate en el codigo de todos los archivos
 
 ###
+
+Analizaré los errores encontrados en cada archivo:
+
+### [test_zmq_unit.py](vscode-remote://dev-container/volume/agent-ai/Valery%28ASI%29/dev/backend/src/agent_ai/zmq/tests/test_zmq_unit.py)
+
+1. No se importa `asyncio.timeout` que se usa implícitamente
+2. Falta el manejo de cleanup después de cada test
+3. En `test_circuit_breaker_integration`, falta verificación del reset del circuit breaker
+
+### [test_zmq_integration.py](vscode-remote://dev-container/volume/agent-ai/Valery%28ASI%29/dev/backend/src/agent_ai/zmq/tests/test_zmq_integration.py)
+
+1. La función `event_loop` debería cerrarse correctamente en caso de error
+2. El `zmq_server` fixture no maneja correctamente el caso donde el socket falla al crearse
+3. Falta manejo de timeout en `test_real_communication`
+
+### [conftest.py](vscode-remote://dev-container/volume/agent-ai/Valery%28ASI%29/dev/backend/src/agent_ai/zmq/tests/conftest.py)
+
+1. `mock_zmq_socket` no implementa todos los métodos necesarios del socket real
+2. No se mockean correctamente las excepciones ZMQ
+3. `mock_settings` no incluye todas las configuraciones necesarias
+
+### [metrics.py](vscode-remote://dev-container/volume/agent-ai/Valery%28ASI%29/dev/backend/src/agent_ai/monitoring/metrics.py)
+
+1. No maneja correctamente métricas asincrónicas
+2. Falta validación de tipos en `track_metrics`
+3. No hay manejo de excepciones en caso de fallo al registrar métricas
+
+### [fastapi.py](vscode-remote://dev-container/volume/agent-ai/Valery%28ASI%29/dev/backend/src/agent_ai/fastapi/fastapi.py)
+
+1. Uso incorrecto de `asyncio.timeout` - debería usar `async with asyncio.timeout()`
+2. Posible memory leak en `upload_file` si ocurre una excepción
+3. `TensorFlowModel._instance` no es thread-safe completamente
+4. Múltiples imports redundantes
+5. `process_query` no está definido pero se usa
+6. Variables no definidas como `model` y `TensorFlowModel` que se usan en algunas funciones
+7. La función `_run_model` no maneja correctamente la liberación de recursos
+8. No hay manejo de desconexión de ZMQ en `handle_zeromq_requests`
+
+### [exceptions.py](vscode-remote://dev-container/volume/agent-ai/Valery%28ASI%29/dev/backend/src/agent_ai/core/exceptions.py)
+
+1. Falta validación de tipos en los argumentos del constructor
+2. `to_json` puede fallar si hay objetos no serializables en `context`
+3. No hay manejo de circularidad en `__cause__`
+
+Recomendaciones generales:
+1. Implementar mejor manejo de recursos con context managers
+2. Añadir más logging para debugging
+3. Mejorar la documentación de las excepciones
+4. Implementar mejores pruebas de integración
+5. Añadir validaciones de tipo con mypy
+6. Mejorar el manejo de errores asíncronos
+7. Implementar retry patterns para operaciones que pueden fallar
+8. Añadir timeouts apropiados para todas las operaciones asíncronas
