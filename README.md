@@ -133,7 +133,7 @@ pytest tests/test_zmq_manager.py -v
 Analiza el codigo de todos los archivos con gran detalle
 Identifica errores en el codigo de todos los archivos
 Depura codigo duplicado o redundate en el codigo de todos los archivos generando una arquitectura jerarquica ordenada
-Refactoriza el codigo de todos los arhcivos generando una arquitectura jerarquica ordenada
+Refactoriza el codigo de todos los archivos generando una arquitectura jerarquica ordenada
 
 ###
 
