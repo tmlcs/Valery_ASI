@@ -126,6 +126,7 @@
 
 npm test -- tests/mutex > testerror.txt 2>&1
 npm test -- tests/RateLimiter -- tests/Mutex -- tests/Validation -- tests/CircuitBreaker > testerror.txt 2>&1
+pytest agent_ai/zmq/tests/ -v --asyncio-mode=strict
 pytest --cov=agent_ai tests/ --cov-report=html
 pytest tests/test_zmq_manager.py -v
 
