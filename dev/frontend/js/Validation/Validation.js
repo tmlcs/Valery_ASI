@@ -9,6 +9,9 @@ export class Validation {
      * @throws {Error} If value is not a positive integer
      */
     static validatePositiveInteger(value, name) {
+        if (value === null || value === undefined) {
+            throw new Error(`${name} cannot be null or undefined`);
+        }
         if (!Number.isInteger(value) || value <= 0) {
             throw new Error(`${name} must be a positive integer`);
         }
@@ -116,8 +119,12 @@ export class Validation {
      * @throws {Error} If value is not a valid email
      */
     static validateEmail(value, name) {
-        // Mejorar validación de email
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if (value === null || value === undefined) {
+            throw new Error(`${name} cannot be null or undefined`);
+        }
+
+        // RFC 5322 compliant email regex
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         if (typeof value !== 'string' || !emailRegex.test(value) || value.length > 254) {
             throw new Error(`${name} must be a valid email address`);
         }

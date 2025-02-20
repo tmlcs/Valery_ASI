@@ -1,0 +1,40 @@
+.explorer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.explorer-nav {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: #1e1e1e;
+}
+
+.explorer-nav button {
+  padding: 8px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.explorer-nav form {
+  flex: 1;
+}
+
+.explorer-nav input {
+  width: 100%;
+  padding: 8px;
+  background: #2d2d2d;
+  border: 1px solid #3d3d3d;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.web-view {
+  flex: 1;
+  border: none;
+  background: #fff;
+}

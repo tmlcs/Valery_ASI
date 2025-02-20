@@ -1,7 +1,3 @@
-import SplashCursor from './SplashCursor';
-
-<SplashCursor />;
-
 class Dropdown {
     constructor(element) {
         if (!document.body.contains(element)) {

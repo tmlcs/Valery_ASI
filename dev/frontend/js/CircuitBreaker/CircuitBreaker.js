@@ -1,4 +1,3 @@
-
 import { Validation } from '../Validation/Validation';
 
 export class CircuitBreaker {
@@ -27,6 +26,11 @@ export class CircuitBreaker {
         Validation.validatePositiveInteger(opts.failureThreshold, 'options.failureThreshold');
         Validation.validateTimeoutValue(opts.recoveryTimeout, 'options.recoveryTimeout');
         Validation.validateTimeoutValue(opts.operationTimeout, 'options.operationTimeout');
+
+        // Validar timeout
+        if (typeof opts.operationTimeout !== 'number' || opts.operationTimeout <= 0) {
+            throw new TypeError('operationTimeout must be a positive number');
+        }
 
         this.#fn = fn;
         this.#failureThreshold = opts.failureThreshold;
@@ -99,9 +103,13 @@ export class CircuitBreaker {
     }
 
     #scheduleRecovery() {
-        if (this.#recoveryTimer) {
-            clearTimeout(this.#recoveryTimer);
+        // Prevenir race conditions
+        const currentTimer = this.#recoveryTimer;
+        if (currentTimer) {
+            clearTimeout(currentTimer);
         }
+
+        if (this.#disposed) return;
 
         this.#recoveryTimer = setTimeout(() => {
             if (!this.#disposed && this.#state === 'OPEN') {

@@ -11,11 +11,19 @@ class ApiService {
                 'Content-Type': 'application/json'
             }
         };
+        this.retryConfig = {
+            maxRetries: 3,
+            baseDelay: 1000,
+            maxDelay: 5000
+        };
     }
 
     async fetchWithTimeout(url, options = {}) {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), CONFIG.TIMEOUT);
+        const timeout = setTimeout(
+            () => controller.abort(), 
+            options.timeout || CONFIG.TIMEOUT
+        );
 
         try {
             const response = await fetch(url, {
@@ -25,11 +33,18 @@ class ApiService {
             });
 
             if (!response.ok) {
+                if (response.status >= 500) {
+                    throw new ServerError('Server error', response.status);
+                }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
-            return data;
+            return await response.json();
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                throw new NetworkError('Request timeout');
+            }
+            throw error;
         } finally {
             clearTimeout(timeout);
         }
