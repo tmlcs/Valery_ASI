@@ -1,7 +1,0 @@
-{"asctime": "2025-02-14 23:22:22,072", "levelname": "INFO", "name": "agent_ai.zmq.zmq", "message": "", "event": "ZMQ asyncio context initialized successfully", "timestamp": "2025-02-14T23:22:22.072318Z", "level": "info"}
-{"asctime": "2025-02-14 23:22:22,075", "levelname": "INFO", "name": "agent_ai.zmq.zmq", "message": "", "event": "ZMQ asyncio context initialized successfully", "timestamp": "2025-02-14T23:22:22.075340Z", "level": "info"}
-{"asctime": "2025-02-14 23:22:22,075", "levelname": "INFO", "name": "agent_ai.zmq.zmq", "message": "", "event": "Starting ZMQ cleanup", "timestamp": "2025-02-14T23:22:22.075702Z", "level": "info"}
-{"asctime": "2025-02-14 23:22:22,075", "levelname": "INFO", "name": "agent_ai.zmq.zmq", "message": "", "event": "ZMQ cleanup completed successfully", "timestamp": "2025-02-14T23:22:22.075928Z", "level": "info"}
-{"asctime": "2025-02-14 23:22:22,078", "levelname": "INFO", "name": "agent_ai.zmq.zmq", "message": "", "event": "ZMQ asyncio context initialized successfully", "timestamp": "2025-02-14T23:22:22.078433Z", "level": "info"}
-{"asctime": "2025-02-14 23:22:22,309", "levelname": "INFO", "name": "agent_ai.zmq.zmq", "message": "", "event": "ZMQ asyncio context initialized successfully", "timestamp": "2025-02-14T23:22:22.309481Z", "level": "info"}
-{"asctime": "2025-02-14 23:22:22,314", "levelname": "INFO", "name": "agent_ai.zmq.zmq", "message": "", "event": "ZMQ asyncio context initialized successfully", "timestamp": "2025-02-14T23:22:22.314892Z", "level": "info"}

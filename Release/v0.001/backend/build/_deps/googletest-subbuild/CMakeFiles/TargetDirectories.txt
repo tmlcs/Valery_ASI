@@ -1,3 +1,0 @@
-/app/agent-ai/backend/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
-/app/agent-ai/backend/build/_deps/googletest-subbuild/CMakeFiles/edit_cache.dir
-/app/agent-ai/backend/build/_deps/googletest-subbuild/CMakeFiles/rebuild_cache.dir
