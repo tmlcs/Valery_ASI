@@ -136,3 +136,6 @@ Depura codigo duplicado o redundate en el codigo de todos los archivos generando
 Refactoriza el codigo de todos los archivos generando una arquitectura jerarquica ordenada
 
 ###
+
+Actualización del componente Nav para usar ThemeProvider
+Vamos a modificar el componente Nav para que utilice el sistema de temas centralizado con ThemeProvider, lo que permitirá un manejo más coherente de los temas en toda la aplicación.
